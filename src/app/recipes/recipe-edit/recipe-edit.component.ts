@@ -40,7 +40,7 @@ export class RecipeEditComponent implements OnInit{
     // );
 
     if (this.editMode) {
-      this.recipeService.updateEcipe(this.id, this.recipeForm.value);
+      this.recipeService.updateRecipe(this.id, this.recipeForm.value);
       this.router.navigate(['..'], { relativeTo: this.route });
     } else {
       const index = this.recipeService.addRecipe(this.recipeForm.value);

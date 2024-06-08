@@ -9,17 +9,26 @@
 
     <div class="navbar-collapse" [class.collapse]="collapsed" (window:resize)="collapsed = true">
       <ul class="nav navbar-nav">
-        <li routerLinkActive="active"><a routerLink="/recipes">Recipes</a></li>
+        @if (isAuthed) {
+          <li routerLinkActive="active"><a routerLink="/recipes">Recipes</a></li>
+        } @else {
+          <li routerLinkActive="active"><a routerLink="/auth">Authenticate</a></li>
+        }
         <li routerLinkActive="active"><a routerLink="/shopping-list">Shopping List</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown" appDropdown>
-          <a style="cursor: pointer;" class="dropdown-toggle" role="button">Manage <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a style="cursor: pointer;" (click)="onSaveData()">Save Data</a></li>
-            <li><a style="cursor: pointer;" (click)="onGetData()">Fetch Data</a></li>
-          </ul>
-        </li>
+        @if (isAuthed) {
+          <li>
+            <a style="cursor: pointer;" (click)="onLogout()">Logout</a>
+          </li>
+          <li class="dropdown" appDropdown>
+            <a style="cursor: pointer;" class="dropdown-toggle" role="button">Manage <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a style="cursor: pointer;" (click)="onSaveData()">Save Data</a></li>
+              <li><a style="cursor: pointer;" (click)="onGetData()">Fetch Data</a></li>
+            </ul>
+          </li>
+        }
       </ul>
     </div>
   </div>

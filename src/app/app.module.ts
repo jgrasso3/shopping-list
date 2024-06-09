@@ -14,43 +14,37 @@ import { DropdownDirective } from './shared/dropdown.directive';
 import { AppRoutingModule } from './app-routing.module';
 import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.component';
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { AuthComponent } from './auth/auth-component';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
 import { AlertComponent } from './shared/alert/alert.component';
 import { FooDirective } from './shared/foo/foo.directive';
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    HeaderComponent,
-    ShoppingListComponent,
-    ShoppingEditComponent,
-    RecipesComponent,
-    RecipeListComponent,
-    RecipeItemComponent,
-    RecipeDetailComponent,
-    DropdownDirective,
-    RecipeStartComponent,
-    RecipeEditComponent,
-    AuthComponent,
-    AlertComponent,
-    FooDirective,
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    AppRoutingModule,
-    HttpClientModule,
-    ReactiveFormsModule
-  ],
-  providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptorService,
-      multi: true
-    }
-  ],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        HeaderComponent,
+        ShoppingListComponent,
+        ShoppingEditComponent,
+        RecipesComponent,
+        RecipeListComponent,
+        RecipeItemComponent,
+        RecipeDetailComponent,
+        DropdownDirective,
+        RecipeStartComponent,
+        RecipeEditComponent,
+        AuthComponent,
+        AlertComponent,
+        FooDirective,
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        FormsModule,
+        AppRoutingModule,
+        ReactiveFormsModule], providers: [
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthInterceptorService,
+            multi: true
+        },
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 export class AppModule { }

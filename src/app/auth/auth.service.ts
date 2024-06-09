@@ -126,7 +126,7 @@ export class AuthService {
       case 'EMAIL_NOT_FOUND':
         errorMes = 'There is no account with this email';
         break;
-      case 'INVALID_PASSWORD':
+      case 'INVALID_LOGIN_CREDENTIALS':
         errorMes = 'Incorrect Password';
         break;
 

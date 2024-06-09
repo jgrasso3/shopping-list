@@ -1,9 +1,11 @@
-import { Component } from "@angular/core";
+import { Component, ComponentFactoryResolver, ViewChild } from "@angular/core";
 import { NgForm } from '@angular/forms';
 import { Observable } from "rxjs";
 
 import { AuthResponseData, AuthService } from "./auth.service";
 import { Router } from "@angular/router";
+// import { AlertComponent } from "../shared/alert/alert.component";
+import { FooDirective } from "../shared/foo/foo.directive";
 
 @Component({
   selector: 'app-auth',
@@ -13,8 +15,13 @@ export class AuthComponent {
   isLoginMode = true;
   isLoading = false;
   error: string = null;
+  // @ViewChild(FooDirective) alertHost: FooDirective;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService, 
+    private router: Router,
+    // private cmpFactRes: ComponentFactoryResolver
+  ) {}
 
   onSwitchMode() {
     this.isLoginMode = !this.isLoginMode;
@@ -45,12 +52,28 @@ export class AuthComponent {
         this.router.navigate(['/recipes']);
       },
       // our service is configured to only throw a message
-      errrorMes => {
-        this.error = errrorMes;
+      errorMes => {
+        this.error = errorMes;
+        // this.showErrorAlert(errorMes);
         this.isLoading = false;
       }
     );
 
     form.reset();
   }
+
+  onDismissError() {
+    this.error = null;
+  }
+
+  // Comp Fac would need to be called whenever we have an error
+  // this is very unfinished. comp fac is hella depricated and not worth learning
+  // private showErrorAlert(message: string) {
+  //   // can't simply create a new instance of the alert comp, must use Comp Factory Resolver
+  //   const alertCmpFac = this.cmpFactRes.resolveComponentFactory(AlertComponent);
+  //   const hostViewContRef = this.alertHost.viewConRef;
+  //   hostViewContRef.clear();
+
+  //   hostViewContRef.createComponent(alertCmpFac);
+  // }
 }

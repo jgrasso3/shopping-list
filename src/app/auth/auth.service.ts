@@ -3,7 +3,8 @@ import { Injectable } from "@angular/core";
 import { catchError, tap } from "rxjs/operators";
 import { BehaviorSubject, Subject, throwError } from "rxjs";
 import { User } from "./user.model";
-import { Route, Router } from "@angular/router";
+import { Router } from "@angular/router";
+import { environment } from "../../environments/environment";
 
 export interface AuthResponseData {
   kind: string;
@@ -19,14 +20,13 @@ export interface AuthResponseData {
 export class AuthService {
   user = new BehaviorSubject<User>(null);
 
-  private apiKey = 'AIzaSyCP9suY-rOKfEKjifl-XPAdA2UM3z0XC2A'
   private tokenExpireTimer: any;
 
   constructor(private http: HttpClient, private router: Router) {}
 
   signup(email: string, password: string) {
     return this.http.post<AuthResponseData>(
-      'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + this.apiKey,
+      'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + environment.firebaseAPIKey,
       {
         email: email,
         password: password,
@@ -45,7 +45,7 @@ export class AuthService {
   
   login(email: string, password: string) {
     return this.http.post<AuthResponseData>(
-      'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' + this.apiKey,
+      'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' + environment.firebaseAPIKey,
       {
         email: email,
         password: password,
@@ -126,8 +126,12 @@ export class AuthService {
       case 'EMAIL_NOT_FOUND':
         errorMes = 'There is no account with this email';
         break;
+      case 'INVALID_PASSWORD':
+        errorMes = 'There is no account with this email';
+        break;
+      // This is the only error firebase gives
       case 'INVALID_LOGIN_CREDENTIALS':
-        errorMes = 'Incorrect Password';
+        errorMes = 'Email or Password does not exist';
         break;
 
     }

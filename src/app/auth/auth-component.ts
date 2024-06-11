@@ -5,7 +5,7 @@ import { Observable } from "rxjs";
 import { AuthResponseData, AuthService } from "./auth.service";
 import { Router } from "@angular/router";
 // import { AlertComponent } from "../shared/alert/alert.component";
-import { FooDirective } from "../shared/foo/foo.directive";
+// import { FooDirective } from "../shared/foo/foo.directive";
 
 @Component({
   selector: 'app-auth',

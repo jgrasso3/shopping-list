@@ -9,7 +9,7 @@ import { RecipeStartComponent } from "./recipe-start/recipe-start.component";
 import { RecipesComponent } from "./recipes.component";
 
 const routes: Routes = [
-  // if we didn't ;azy load recipes, we would define the top path to 'recipes' here instad of in the AppRouter
+  // if we didn't lazy load recipes, we would define the top path to 'recipes' here instad of in the AppRouter
   { path: '', component: RecipesComponent, 
     canActivate: [AuthGuard],
     children: [

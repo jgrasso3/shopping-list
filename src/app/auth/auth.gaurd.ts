@@ -13,11 +13,11 @@ export class AuthGuard implements CanActivate {
     return this.authServ.user.pipe(
       take(1), // make sure there is no ongoing user subscription
       map(user => {
-        const isAuth = !!user;
+        const isAuth = !!user; // trick to turn a value into a bool
         if (isAuth) {
           return true;
         } else {
-          return this.router.createUrlTree(['/auth']);
+          return this.router.createUrlTree(['/auth']); // if no authenticated user is found, redirect to auth page
         }
       })
     );
